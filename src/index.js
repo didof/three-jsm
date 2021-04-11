@@ -1,13 +1,7 @@
 import * as THREE from 'three'
+import scene from './scene'
 
-// SCENE
-const scene = new THREE.Scene()
-
-const geometry = new THREE.BoxGeometry()
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
-const cube = new THREE.Mesh(geometry, material)
-
-scene.add(cube)
+const cube = scene.Elements['cube1']
 
 // CAMERA
 const camera = new THREE.PerspectiveCamera(
@@ -16,7 +10,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 )
-camera.position.z = 5
+camera.position.z = 10
 
 // RENDERER
 const renderer = new THREE.WebGLRenderer()
@@ -29,6 +23,10 @@ document.body.appendChild(renderer.domElement)
 
 function animate() {
   requestAnimationFrame(animate)
-  renderer.render(scene, camera)
+
+  cube.rotation.x += 0.01
+  cube.rotation.y += 0.01
+
+  renderer.render(scene.Instance, camera)
 }
 animate()
