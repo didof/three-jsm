@@ -14,6 +14,10 @@ export default {
       sourcemap: true,
     },
   ],
+  watch: {
+    include: './src/**',
+    clearScreen: false,
+  },
   plugins: [
     resolve({ browser: true, jsnext: true, main: true }),
     commonjs(),
