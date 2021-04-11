@@ -1,4 +1,5 @@
-import { nodeResolve as resolve } from '@rollup/plugin-node-resolve'
+import resolve from '@rollup/plugin-node-resolve'
+import commonjs from 'rollup-plugin-commonjs'
 import { terser } from 'rollup-plugin-terser'
 import serve from 'rollup-plugin-serve'
 import html from 'rollup-plugin-html'
@@ -14,21 +15,28 @@ export default {
     },
   ],
   plugins: [
-    resolve({ browser: true }),
+    resolve({ browser: true, jsnext: true, main: true }),
+    commonjs(),
     terser(),
     html({
-      include: './index.html',
+      include: 'dist/index.html',
+      htmlMinifierOptions: {
+        collapseWhitespace: true,
+        collapseBooleanAttributes: true,
+        conservativeCollapse: true,
+        minifyJS: true,
+      },
     }),
     serve({
       open: true,
       verbose: true,
-      contentBase: ['', 'dist'],
+      contentBase: ['dist'],
       historyApiFallback: true,
       host: 'localhost',
       port: 3000,
     }),
     livereload({
-      watch: ['', 'dist'],
+      watch: ['src'],
     }),
   ],
 }
